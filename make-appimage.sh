@@ -3,13 +3,14 @@
 set -eu
 
 ARCH=$(uname -m)
-VERSION=$(pacman -Q kega-fusion | awk '{print $2; exit}') # example command to get version of application here
+VERSION=$(pacman -Q kega-fusion | awk '{print $2; exit}')
 export ARCH VERSION
 export OUTPATH=./dist
-export ADD_HOOKS="self-updater.bg.hook"
+export ADD_HOOKS="self-updater.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
 export ICON=/usr/share/pixmaps/kega-fusion.png
 export DESKTOP=/usr/share/applications/kega-fusion.desktop
+export STARTUPWMCLASS=Fusion
 export DEPLOY_OPENGL=1
 export LIB_DIR=/usr/lib32
 
@@ -17,6 +18,7 @@ export LIB_DIR=/usr/lib32
 mkdir -p ./AppDir/bin
 cp -rn /usr/lib/kega-fusion/* ./AppDir/bin
 quick-sharun ./AppDir/bin/*
+echo 'ANYLINUX_DO_NOT_LOAD_LIBS=libpipewire-0.3.so*:${ANYLINUX_DO_NOT_LOAD_LIBS}' >> ./AppDir/.env
 
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
