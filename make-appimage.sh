@@ -11,18 +11,12 @@ export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}
 export ICON=/usr/share/pixmaps/kega-fusion.png
 export DESKTOP=/usr/share/applications/kega-fusion.desktop
 export DEPLOY_OPENGL=1
-export LIB_DIR=/usr/lib32 
+export LIB_DIR=/usr/lib32
 
 # Deploy dependencies
-quick-sharun /usr/bin/kega-fusion /usr/lib/kega-fusion
-
-sed -i -e 's|/usr|$APPDIR|g' ./AppDir/bin/kega-fusion
-
-# because kega-fusion is a shell script that launches
-# $APPDIR/lib/kega-fusion/Fusion, this causes sharun to fail to find
-# SHARUN_DIR, since sharun can only be executed outside $APPDIR/bin
-# when the SHARUN_DIR env variable is set
-echo 'export SHARUN_DIR=$APPDIR' > ./AppDir/bin/set-sharun-dir.src.hook
+mkdir -p ./AppDir/bin
+cp -rn /usr/lib/kega-fusion/* ./AppDir/bin
+quick-sharun ./AppDir/bin/*
 
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
