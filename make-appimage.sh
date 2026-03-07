@@ -18,6 +18,12 @@ quick-sharun /usr/bin/kega-fusion /usr/lib/kega-fusion
 
 sed -i -e 's|/usr|$APPDIR|g' ./AppDir/bin/kega-fusion
 
+# because kega-fusion is a shell script that launches
+# $APPDIR/lib/kega-fusion/Fusion, this causes sharun to fail to find
+# SHARUN_DIR, since sharun can only be executed outside $APPDIR/bin
+# when the SHARUN_DIR env variable is set
+echo 'export SHARUN_DIR=$APPDIR' > ./AppDir/bin/set-sharun-dir.src.hook
+
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
 
