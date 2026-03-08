@@ -12,6 +12,7 @@ export ICON=/usr/share/pixmaps/kega-fusion.png
 export DESKTOP=/usr/share/applications/kega-fusion.desktop
 export STARTUPWMCLASS=Fusion
 export DEPLOY_OPENGL=1
+export DEPLOY_PIPEWIRE=1
 export LIB_DIR=/usr/lib32
 
 # Deploy dependencies
