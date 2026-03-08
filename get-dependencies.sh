@@ -12,13 +12,18 @@ tee -a /etc/pacman.conf <<EOF
 Include = /etc/pacman.d/mirrorlist
 EOF
 pacman -Syu --noconfirm \
+    glu                 \
     lib32-alsa-plugins  \
     lib32-atk           \
     lib32-cairo         \
     lib32-gdk-pixbuf2   \
     lib32-glib2         \
+    lib32-glu           \
     lib32-libcups       \
+    lib32-jack2         \
+    lib32-libpulse      \
     lib32-librsvg       \
+    lib32-libsm         \
     lib32-libx11        \
     lib32-libxcomposite \
     lib32-libxcursor    \
@@ -33,10 +38,11 @@ pacman -Syu --noconfirm \
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
-get-debloated-pkgs --add-common --prefer-nano
+get-debloated-pkgs --add-common --prefer-nano gtk2-mini
 
 # Comment this out if you need an AUR package
-make-aur-package gtk2
+make-aur-package lib32-sdl2
+make-aur-package lib32-mpg123
 make-aur-package lib32-gtk2
 make-aur-package kega-fusion
 
